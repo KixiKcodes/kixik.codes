@@ -1,0 +1,9 @@
+---
+import BaseLayout from './BaseLayout.astro';
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout pageTitle={frontmatter.title} containerWidth="max-w-4xl" fullHeight={true} showBackButton={true}>
+    <h5>{frontmatter.pubDate.toString().slice(0, 10)}</h5>
+    <slot />
+</BaseLayout>

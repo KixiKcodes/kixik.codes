@@ -1,0 +1,182 @@
+---
+const {pageTitle, transitionSpeed = 1200, fullHeight = false} = Astro.props;
+
+const fadeDuration = Math.max(220, Math.round(transitionSpeed * 0.25));
+const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
+---
+
+<style>
+    .content-box {
+        overflow: hidden;
+        width: 100%;
+        height: auto;
+        transition: height var(--content-resize-duration, 3500ms) ease;
+    }
+
+    .content-box[data-full-height="true"] {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        max-height: 100%;
+    }
+
+    .content-inner {
+        overflow-y: auto;
+        height: 100%;
+        opacity: 1;
+        transition: opacity var(--content-fade-duration, 300ms) ease;
+    }
+
+    .content-inner[data-full-height="true"] {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto;
+    }
+
+    :global(html.content-transitioning) .content-inner {
+        opacity: 0;
+    }
+
+    .content-pad {
+        padding: 1rem 2rem 2rem 2rem;
+        min-height: 100%;
+    }
+
+    .content-inner::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .content-inner::-webkit-scrollbar-track {
+        display: none;
+    }
+
+    .content-inner::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+    }
+
+    .content-inner::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .content-inner::-webkit-scrollbar-button,
+    .content-inner::-webkit-scrollbar-button:single-button,
+    .content-inner::-webkit-scrollbar-button:vertical:decrement,
+    .content-inner::-webkit-scrollbar-button:vertical:increment {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    .content-inner {
+        scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+        scrollbar-width: thin;
+    }
+</style>
+
+<div
+    class="bg-gray-700 rounded content-box"
+    transition:name="content-shell"
+    transition:animate="initial"
+    data-transition-speed={transitionSpeed}
+    data-fade-duration={fadeDuration}
+    data-resize-duration={resizeDuration}
+    data-full-height={fullHeight}
+    style={`--content-fade-duration:${fadeDuration}ms; --content-resize-duration:${resizeDuration}ms;`}
+>
+    <div class="content-inner" data-full-height={fullHeight}>
+        <div class="content-pad">
+            <h1>{pageTitle}</h1>
+            <slot />
+        </div>
+    </div>
+</div>
+
+<script is:inline data-astro-rerun>
+    const transitionWindow = window;
+
+    if (!transitionWindow.__contentContainerTransitionBound) {
+        transitionWindow.__contentContainerTransitionBound = true;
+
+        let resizeTimer = 0;
+        let previousHeight = 0;
+
+        const getContentBox = () => document.querySelector(".content-box");
+        const getContentInner = () => document.querySelector(".content-inner");
+
+        document.addEventListener("astro:before-preparation", (event) => {
+            const contentBox = getContentBox();
+            const contentInner = getContentInner();
+
+            if (!contentBox || !contentInner) {
+                return;
+            }
+
+            previousHeight = Math.ceil(
+                contentBox.dataset.fullHeight === "true"
+                    ? contentInner.scrollHeight
+                    : contentBox.getBoundingClientRect().height
+            );
+            const fadeDuration = Number(contentBox.dataset.fadeDuration || 220);
+            const originalLoader = event.loader;
+
+            event.loader = async () => {
+                document.documentElement.classList.add("content-transitioning");
+                await new Promise((resolve) => window.setTimeout(resolve, fadeDuration));
+                await originalLoader();
+            };
+        });
+
+        document.addEventListener("astro:before-swap", (event) => {
+            const newContentBox = event.newDocument.querySelector(".content-box");
+
+            if (!newContentBox) {
+                return;
+            }
+
+            const newContentInner = event.newDocument.querySelector(".content-inner") as HTMLElement | null;
+            const targetHeight = Math.ceil((newContentInner ?? newContentBox).scrollHeight);
+            newContentBox.dataset.targetHeight = String(targetHeight);
+
+            if (previousHeight > 0) {
+                newContentBox.style.height = `${previousHeight}px`;
+            }
+        });
+
+        document.addEventListener("astro:after-swap", () => {
+            const contentBox = getContentBox();
+
+            window.clearTimeout(resizeTimer);
+
+            if (!contentBox) {
+                document.documentElement.classList.remove("content-transitioning");
+                return;
+            }
+
+            const targetHeight = Number(contentBox.dataset.targetHeight || contentBox.scrollHeight);
+            const resizeDuration = Number(contentBox.dataset.resizeDuration || 3500);
+
+            requestAnimationFrame(() => {
+                contentBox.style.height = `${targetHeight}px`;
+            });
+
+            resizeTimer = window.setTimeout(() => {
+                document.documentElement.classList.remove("content-transitioning");
+                contentBox.style.height = "";
+                previousHeight = 0;
+            }, resizeDuration);
+        });
+
+        document.addEventListener("astro:page-load", () => {
+            window.clearTimeout(resizeTimer);
+            document.documentElement.classList.remove("content-transitioning");
+            previousHeight = 0;
+
+            const contentBox = getContentBox();
+
+            if (contentBox) {
+                contentBox.style.height = "";
+            }
+        });
+    }
+</script>

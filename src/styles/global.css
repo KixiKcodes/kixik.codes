@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+html {
+    background-color: #272727;
+    font-family: sans-serif;
+    height: 100%;
+}
+
+body {
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 1rem 0;
+    color: rgb(49, 220, 154);
+    font-size: 4rem;
+}

@@ -1,0 +1,31 @@
+---
+import ContentContainer from "../components/ContentContainer.astro";
+import Footer from "../components/Footer.astro";
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
+const {pageTitle, containerWidth = "max-w-2xl", fullHeight = false, enableTransitions = true, transitionSpeed = 1200, showBackButton = false} = Astro.props;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{pageTitle}</title>
+        {enableTransitions && <ClientRouter />}
+    </head>
+    <body>
+        <div class={`flex flex-col ${fullHeight ? 'flex-1' : 'flex-1 justify-center'} items-center px-4 ${fullHeight ? 'py-4 overflow-hidden' : ''}`}>
+            <div class={`prose dark:prose-invert
+                prose-h1:font-bold prose-h1:text-xl
+                prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl
+                w-full ${containerWidth} ${fullHeight ? 'h-full overflow-hidden rounded' : 'overflow-auto'}`}>
+                <ContentContainer pageTitle={pageTitle} transitionSpeed={transitionSpeed} fullHeight={fullHeight} showBackButton={showBackButton}>
+                    <slot />
+                </ContentContainer>
+            </div>
+        </div>
+        <Footer />
+    </body>
+</html>
