@@ -27,6 +27,38 @@ body {
     zoom: 133%;
 }
 
+.bg-video {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-video__media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.95) contrast(1.08) brightness(0.7);
+}
+
+.bg-video::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(8, 10, 12, 0.2),
+        rgba(8, 10, 12, 0.45)
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bg-video {
+        display: none;
+    }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -45,4 +77,19 @@ a {
 .prose :where(ul > li)::marker,
 .prose :where(ol > li)::marker {
     color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+    html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    body {
+        zoom: 100%;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
 }

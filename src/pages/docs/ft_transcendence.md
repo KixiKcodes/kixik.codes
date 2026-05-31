@@ -11,7 +11,7 @@ In collaboration with my peers [Jacob](https://github.com/Cimex404), [Tobias](ht
 ## About
 This is the final project of the 42 Common Core. It is meant to put all of our skills to the test by making a full-stack web application with tons of features. The premise is to make our own version of Pong with some modern features of our choice. The project is comprised of a mandatory part and optional Major and Minor modules which count toward the final score.
 
-![Main Menu](/public/images/transcendence_menu.png)
+![Main Menu](/images/transcendence_menu.png)
 
 ## Base Features
 The basic features that Transcendence had to have are a local game of pong between two players and a round-based tournament system between multiple players. The gameplay must be faithful to that of the original 1972 game. How the tournament system works exactly is left up to us to decide, so we took some liberties there. Our website has to be secure and protected against SQL injections and malicious API calls. I focused primarily on this aspect, creating the login/register flow, 2FA system, JWT and cookie management and API protection with Authorization pre-handlers.
@@ -36,9 +36,9 @@ We picked 9 major modules and 4 minor modules. A minor module is worth half a ma
 - **DevOps Monitoring System (Prometheus, Grafana and Alert Manager)** - Three additional containers have been set up to gather metrics and display them. There is also an alert system linked to a custom Slack channel.
 - **Multiple Browser Compatibility** - Our Transcendence works on multiple browsers (though Firefox is its native one).
 
-![Login or Register](/public/images/transcendence_login.png)
+![Login or Register](/images/transcendence_login.png)
 
-![Gameplay GIF](/public/images/gameplay.GIF)
+![Gameplay GIF](/images/gameplay.gif)
 
 ## Usage
 - You can simply clone this repo to your machine:

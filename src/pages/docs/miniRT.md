@@ -6,7 +6,7 @@ description: '3D raytracer made in pure C using MLX42.'
 tags: ["C"]
 ---
 
-![test_scene](/public/images/test_scene.png)
+![test_scene](/images/test_scene.png)
 
 _This project was made in collaboration with [Cimex](https://github.com/Cimex404). He has uploaded it as his own repository as well!_
 
@@ -86,12 +86,12 @@ sp   -5,0,-21                             16       255,255,255 0
 **NOTE:** The project depends on my [libft](https://github.com/KixiKcodes/libft) utilities library as well as [MLX42](https://github.com/codam-coding-college/MLX42) for graphics. Both are added as submodules in the repository.
 
 ## Render Gallery
-![alien_planet](/public/images/alien_planet.png)
-![mirror_room](/public/images/mirror_room.png)
-![underwater_temple](/public/images/underwater_temple.png)
-![water_molecule](/public/images/water_molecule.png)
-![eval_scene_7](/public/images/eval_scene_7.png)
-![octagon](/public/images/octagon.png)
+![alien_planet](/images/alien_planet.png)
+![mirror_room](/images/mirror_room.png)
+![underwater_temple](/images/underwater_temple.png)
+![water_molecule](/images/water_molecule.png)
+![eval_scene_7](/images/eval_scene_7.png)
+![octagon](/images/octagon.png)
 
 ## Future Plans
 This project has undoubtedly been my favorite from the 42 core curriculum so far. I look forward to adding many advanced features, _though no longer strictly following the 42 norm or project rules_.

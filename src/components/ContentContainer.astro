@@ -13,8 +13,8 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
         position: relative;
         background: linear-gradient(
             135deg,
-            rgba(71, 85, 105, 0.9) 30%,
-            color-mix(in oklch, var(--color-secondary), transparent 60%) 100%
+            rgb(71 85 105 / 1) 30%,
+            color-mix(in oklch, var(--color-secondary), black 35%) 100%
         );
         transition: height var(--content-resize-duration, 3500ms) ease;
     }

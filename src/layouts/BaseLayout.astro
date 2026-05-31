@@ -11,12 +11,41 @@ const {pageTitle, containerWidth = "max-w-2xl", fullHeight = false, enableTransi
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=2" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
         <title>{pageTitle}</title>
         {enableTransitions && <ClientRouter />}
     </head>
     <body>
+        <div class="bg-video" aria-hidden="true">
+            <video class="bg-video__media" autoplay muted loop playsinline preload="auto">
+                <source src="/videos/background.mp4" type="video/mp4" />
+            </video>
+        </div>
+        <script is:inline>
+            const bgVideo = document.querySelector(".bg-video__media");
+
+            if (bgVideo && !bgVideo.dataset.loopGuard) {
+                bgVideo.dataset.loopGuard = "true";
+
+                const resume = () => {
+                    bgVideo.play().catch(() => {});
+                };
+
+                bgVideo.addEventListener("ended", () => {
+                    bgVideo.currentTime = 0;
+                    resume();
+                });
+
+                document.addEventListener("visibilitychange", () => {
+                    if (!document.hidden) {
+                        resume();
+                    }
+                });
+
+                resume();
+            }
+        </script>
         <div class={`flex flex-col ${fullHeight ? 'flex-1' : 'flex-1 justify-center'} items-center px-4 ${fullHeight ? 'py-4 overflow-hidden' : ''}`}>
             <div class={`prose dark:prose-invert prose-code:before:hidden prose-code:after:hidden prose-h1:font-bold prose-h1:text-xl
                 prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl w-full ${containerWidth} ${fullHeight ? 'h-full overflow-hidden rounded' : 'overflow-auto'}`}>

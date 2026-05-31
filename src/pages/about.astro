@@ -6,11 +6,12 @@ import '../styles/global.css';
 
 <BaseLayout pageTitle="About" showBackButton={true}>
     <p>
-        My name is Noel (KixiK is my alias), I am a passionate software developer living in Germany.
+        Hey, my name is Noel. <span class="pronouns">(they/them)</span><br/>
+        I am a passionate software developer living in Germany.
         I was born in Spain but have been living in Germany for over half of my life.
-        Despite this, English is actually by far my most used language.<br/>
-        I started out with 2D and 3D digital art around 2021, specifically oriented towards
-        video games, but eventually became most interested in Programming and Computer Science
+        (Despite this, English is actually by far my most used language)<br/>
+        I started out learning 2D/3D digital art around 2020, specifically oriented towards
+        video games, but eventually became most interested in programming and computer science
         in general. Currently, I am a post-core-curriculum student at <a href="https://www.42heilbronn.de/en/learning-model/">42Heilbronn</a>,
         about half way through my internship at the time of writting this.<br/>
         My biggest hobby is electronic music production, which I have been doing for about 5 years.
@@ -20,3 +21,14 @@ import '../styles/global.css';
     </p>
 	<Socials />
 </BaseLayout>
+
+<style>
+    .pronouns {
+        background: linear-gradient(45deg, #f5d142, #ffffff, #b084f5, #111111);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-left: 0.35rem;
+        font-size: 0.9em;
+    }
+</style>
