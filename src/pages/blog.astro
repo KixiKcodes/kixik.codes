@@ -52,7 +52,7 @@ const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true })
             text-align: right;
         }
     </style>
-
+    <p>Some stuff I write from time to time.</p>
     <div class="post-grid">
         {allPosts.map((post: any) => (
             <a href={post.url} class="post-card">

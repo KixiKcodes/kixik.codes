@@ -5,6 +5,8 @@ pubDate: 31.05.2026
 description: 'A few of the things I think about often regarding AI'
 ---
 
+**THIS POST IS UNDER CONSTRUCTION**
+
 For some time now I have contemplated collecting my thoughts regarding AI and its ever-growing presence in daily life. What better place to do so than here.
 
 I want to preface this by recognizing that AI is revolutionary, I know that. I see it shaping the future of technology in ways we could have only dreamed of a few decades back. I myself now make use of it all time time, whether to quickly debug or sketch out snippets of code or to help answer some questions when a google search fails to satisfy. However, regardless of all the positives this theology may bring, I think there are some dangerous side effects that are evident in the kind of thing we are seeing online and, regrettably, in every aspect of life.
@@ -18,5 +20,3 @@ Programming is, believe it or not, exactly the same. Can it make code? Yes, abso
 The ease with which work can be stolen.
 
 Picture this: you have to invent a machine, doesn't matter what but it has to be able to do something useful. AI cannot possible help you because it requires such specific context and access to things that it just cannot have. You pour the time and effort and build the foundation for this machine to work. you have done the part AI cannot. Now someone else comes along, takes that foundation and finishes the machine for you using AI. AI which would have **never** been able to do anything if it weren't for you laying the foundation for it. Then that person proudly shows the finished machine as theirs. Okay, now you don't have to imagine anymore, because this happened to me except the machine is a program.
-
-TBC...
