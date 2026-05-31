@@ -1,0 +1,54 @@
+---
+const { tags = [] } = Astro.props;
+
+const iconMap = {
+    C: { icon: "devicon-c-original", label: "C" },
+    "C++": { icon: "devicon-cplusplus-plain", label: "C++" },
+    "C#": { icon: "devicon-csharp-plain", label: "C#" },
+    Bash: { icon: "devicon-bash-plain", label: "Bash" },
+    Java: { icon: "devicon-java-plain", label: "Java" },
+    Kotlin: { icon: "devicon-kotlin-plain", label: "Kotlin" },
+    JavaScript: { icon: "devicon-javascript-plain", label: "JavaScript" },
+    TypeScript: { icon: "devicon-typescript-plain", label: "TypeScript" },
+    Python: { icon: "devicon-python-plain", label: "Python" },
+    Android: { icon: "devicon-android-plain", label: "Android" },
+    Docker: { icon: "devicon-docker-plain", label: "Docker" },
+};
+
+const icons = tags
+    .map((tag) => iconMap[tag])
+    .filter(Boolean);
+---
+
+<style>
+    .language-icons {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .language-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: oklch(20.841% 0.04169 266.371 / 0.801);
+        font-size: 1.1rem;
+    }
+
+    .language-icon i {
+        line-height: 1;
+    }
+</style>
+
+{icons.length > 0 && (
+    <ul class="language-icons" aria-label="Languages">
+        {icons.map((icon) => (
+            <li class="language-icon" title={icon.label}>
+                <i class={icon.icon} aria-hidden="true"></i>
+            </li>
+        ))}
+    </ul>
+)}

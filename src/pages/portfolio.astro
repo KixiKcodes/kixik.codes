@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LanguageIcons from '../components/LanguageIcons.astro';
 import '../styles/global.css';
 const allProjects = Object.values(import.meta.glob('./docs/*.md', { eager: true }));
 ---
@@ -28,11 +29,19 @@ const allProjects = Object.values(import.meta.glob('./docs/*.md', { eager: true 
             transform: translateY(-2px);
         }
 
+        .project-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
         .project-title {
             font-size: 1.25rem;
             font-weight: bold;
             color: rgb(49, 220, 154);
-            margin-bottom: 0.5rem;
+            margin: 0;
         }
 
         .project-description {
@@ -45,7 +54,10 @@ const allProjects = Object.values(import.meta.glob('./docs/*.md', { eager: true 
     <div class="project-grid">
         {allProjects.map((project: any) => (
             <a href={project.url} class="project-card">
-                <div class="project-title">{project.frontmatter.title}</div>
+                <div class="project-header">
+                    <div class="project-title">{project.frontmatter.title}</div>
+                    <LanguageIcons tags={project.frontmatter.tags ?? []} />
+                </div>
                 <div class="project-description">{project.frontmatter.description}</div>
             </a>
         ))}

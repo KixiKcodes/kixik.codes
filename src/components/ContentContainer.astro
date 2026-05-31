@@ -11,6 +11,11 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
         width: 100%;
         height: auto;
         position: relative;
+        background: linear-gradient(
+            135deg,
+            rgba(71, 85, 105, 0.9) 30%,
+            color-mix(in oklch, var(--color-secondary), transparent 60%) 100%
+        );
         transition: height var(--content-resize-duration, 3500ms) ease;
     }
 
@@ -25,7 +30,7 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
         overflow-y: auto;
         height: 100%;
         opacity: 1;
-        transition: opacity var(--content-fade-duration, 300ms) ease;
+        transition: opacity var(--content-fade-duration, 3000ms) ease;
     }
 
     .content-inner[data-full-height="true"] {
@@ -52,7 +57,7 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
     }
 
     .content-inner::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(131, 120, 89, 0.3);
         border-radius: 4px;
     }
 
@@ -80,7 +85,7 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
         left: 1rem;
         background: none;
         border: none;
-        color: rgb(49, 220, 154);
+        color: var(--color-primary);
         font-size: 1.5rem;
         cursor: pointer;
         padding: 0.5rem;
@@ -91,10 +96,7 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
         opacity: 1;
         transition: opacity var(--content-fade-duration, 300ms) ease,
             transform 0.2s ease;
-    }
-
-    .back-button:hover {
-        transform: scale(1.1);
+        transform: translateX(-15px);
     }
 
     :global(html.content-transitioning) .back-button {
@@ -108,7 +110,7 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
 </style>
 
 <div
-    class="bg-gray-700 rounded content-box"
+    class="rounded content-box"
     transition:name="content-shell"
     transition:animate="initial"
     data-transition-speed={transitionSpeed}

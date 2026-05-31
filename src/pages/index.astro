@@ -1,17 +1,39 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Socials from "../components/Socials.astro";
 ---
 
-<BaseLayout pageTitle="KixiK Codes">
-    <div class="flex flex-col gap-4 items-center">
-        <a href="/about" class="w-52 py-4 px-6 text-center bg-emerald-400 text-gray-900 font-bold rounded hover:bg-emerald-500 transition no-underline">About</a>
-        <a href="/portfolio" class="w-52 py-4 px-6 text-center bg-emerald-400 text-gray-900 font-bold rounded hover:bg-emerald-500 transition no-underline">Portfolio</a>
-        <a href="/blog" class="w-52 py-4 px-6 text-center bg-emerald-400 text-gray-900 font-bold rounded hover:bg-emerald-500 transition no-underline">Blog</a>
+<BaseLayout pageTitle="KixiK.codes">
+    <div class="flex flex-col gap-4 items-center not-prose">
+        <a href="/about" class="w-52 py-4 px-6 text-center font-bold rounded transition action-button"><span class="action-button__label">About</span></a>
+        <a href="/portfolio" class="w-52 py-4 px-6 text-center font-bold rounded transition action-button"><span class="action-button__label">Portfolio</span></a>
+        <a href="/blog" class="w-52 py-4 px-6 text-center font-bold rounded transition action-button"><span class="action-button__label">Blog</span></a>
     </div>
+    <Socials />
 </BaseLayout>
 
 <style>
-    .no-underline {
+    :global(.content-pad h1) {
+        text-align: center;
+    }
+
+    .action-button {
+        background-color: oklch(20.841% 0.04169 266.371 / 0.369);
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        line-height: 1;
         text-decoration: none;
+    }
+
+    .action-button__label {
+        display: inline-block;
+        transform: translateY(0.32rem);
+    }
+
+    .action-button:hover {
+        background-color: color-mix(in oklch, oklch(37.2% 0.044 257.287), rgb(0, 0, 0) 12%);
     }
 </style>

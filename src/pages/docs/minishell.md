@@ -1,8 +1,9 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: 'minishell'
-pubDate: 2026-05-30
+pubDate: '0'
 description: 'A simple bash-like shell written in C'
+tags: ["C", "Bash"]
 ---
 
 _This project was done in collaboration with my peer [Cimex](https://github.com/Cimex404). Make sure to check out his work!_

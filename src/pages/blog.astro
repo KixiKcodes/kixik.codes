@@ -1,7 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/global.css';
-const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }))
+    .sort((a: any, b: any) => {
+        const dateA = new Date(a.frontmatter?.pubDate ?? 0).getTime();
+        const dateB = new Date(b.frontmatter?.pubDate ?? 0).getTime();
+        return dateB - dateA;
+    });
 ---
 
 <BaseLayout pageTitle="Blog" containerWidth="max-w-4xl" fullHeight={true} showBackButton={true}>
@@ -44,16 +49,18 @@ const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true })
         .post-date {
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.85rem;
-            margin-top: 0.5rem;
+            text-align: right;
         }
     </style>
 
     <div class="post-grid">
         {allPosts.map((post: any) => (
             <a href={post.url} class="post-card">
-                <div class="post-title">{post.frontmatter.title}</div>
+                <div class="flex justify-between">
+                    <div class="post-title">{post.frontmatter.title}</div>
+                    <div class="post-date">{post.frontmatter.pubDate?.toString().slice(0, 10)}</div>
+                </div>
                 <div class="post-description">{post.frontmatter.description}</div>
-                <div class="post-date">{post.frontmatter.pubDate?.toString().slice(0, 10)}</div>
             </a>
         ))}
     </div>

@@ -1,20 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+:root {
+    --color-primary: oklch(76.5% 0.177 163.223);
+    --color-secondary: oklch(52.521% 0.21073 19.246);
+    --font-mono: "JetBrains Mono";
+}
+
 html {
-    background-color: #272727;
-    font-family: sans-serif;
+    background-color: oklch(21.6% 0.006 56.043);
+    font-family: "Manjari", system-ui, sans-serif;
     height: 100%;
 }
 
 body {
     color: white;
-    height: 100vh;
+    height: 75vh;
     display: flex;
     flex-direction: column;
     margin: 0;
     padding: 0;
-    line-height: 1.5;
+    line-height: 1;
+    overflow: hidden;
+    zoom: 133%;
 }
 
 * {
@@ -23,6 +33,15 @@ body {
 
 h1 {
     margin: 1rem 0;
-    color: rgb(49, 220, 154);
+    color: var(--color-primary);
     font-size: 4rem;
+}
+
+a {
+    color: var(--color-primary);
+}
+
+.prose :where(ul > li)::marker,
+.prose :where(ol > li)::marker {
+    color: var(--color-primary);
 }
