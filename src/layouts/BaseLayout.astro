@@ -17,9 +17,9 @@ const {pageTitle, containerWidth = "max-w-2xl", fullHeight = false, enableTransi
         {enableTransitions && <ClientRouter />}
     </head>
     <body>
-        <div class="bg-video" aria-hidden="true">
+        <div class="bg-video" aria-hidden="true" transition:persist="bg-video">
             <video class="bg-video__media" autoplay muted loop playsinline preload="auto">
-                <source src="/videos/background.mp4" type="video/mp4" />
+                <source src="/videos/background.webm" type="video/webm" />
             </video>
         </div>
         <script is:inline>
