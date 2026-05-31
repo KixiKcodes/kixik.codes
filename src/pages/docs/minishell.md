@@ -2,12 +2,7 @@
 layout: ../../layouts/MarkdownPostLayout.astro
 title: 'minishell'
 pubDate: 2026-05-30
-description: 'A simple bash-like shell written in C.'
-author: 'Astro Learner'
-image:
-    url: 'https://docs.astro.build/assets/rose.webp'
-    alt: 'The Astro logo on a dark background with a pink glow.'
-tags: ["astro", "blogging", "learning in public"]
+description: 'A simple bash-like shell written in C'
 ---
 
 _This project was done in collaboration with my peer [Cimex](https://github.com/Cimex404). Make sure to check out his work!_
