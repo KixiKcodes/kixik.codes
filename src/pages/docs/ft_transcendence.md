@@ -42,10 +42,12 @@ We picked 9 major modules and 4 minor modules. A minor module is worth half a ma
 
 ## Usage
 - You can simply clone this repo to your machine:
-`git clone https://github.com/kixikCodes/ft_transcendence`
+```sh
+git clone https://github.com/KixiKCodes/ft_transcendence
+```
 
 - You **must** make a `.env` file in the root of the repository with these variables:
-```
+```conf
 JWT_SECRET=[JSON Web Token Secret Key]
 
 GF_SECURITY_ADMIN_USER=[Grafana Admin Username]
