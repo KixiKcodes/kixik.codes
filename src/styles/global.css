@@ -74,6 +74,18 @@ a {
     color: var(--color-primary);
 }
 
+.prose {
+    color: white;
+    --tw-prose-body: white;
+    --tw-prose-headings: var(--color-primary);
+    --tw-prose-bold: white;
+    --tw-prose-counters: white;
+    --tw-prose-bullets: white;
+    --tw-prose-quotes: white;
+    --tw-prose-code: white;
+    --tw-prose-hr: rgba(255, 255, 255, 0.35);
+}
+
 .prose :where(ul > li)::marker,
 .prose :where(ol > li)::marker {
     color: var(--color-primary);
@@ -87,6 +99,7 @@ a {
 
     body {
         zoom: 100%;
+        font-size: 1.15rem;
     }
 
     h1 {

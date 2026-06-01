@@ -1,21 +1,7 @@
 {
 	"compatibility_date": "2026-05-31",
-	"compatibility_flags": [
-		"global_fetch_strictly_public"
-	],
 	"name": "kixik-codes",
-	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
-		"directory": "./dist",
-		"binding": "ASSETS"
-	},
-	"kv_namespaces": [
-		{
-			"binding": "SESSION",
-			"id": "59c2c35b373544218f0b5c7529396c3b"
-		}
-	],
-	"observability": {
-		"enabled": true
+		"directory": "./dist"
 	}
 }
