@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LanguageIcons from '../components/LanguageIcons.astro';
 import '../styles/global.css';
-const allProjects = Object.values(import.meta.glob('./docs/*.md', { eager: true }));
+const allProjects = Object.values(import.meta.glob('./projects/*.md', { eager: true }));
 ---
 
 <BaseLayout pageTitle="Projects" containerWidth="max-w-4xl" fullHeight={true} showBackButton={true}>

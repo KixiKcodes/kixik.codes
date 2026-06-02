@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Socials from "../../components/Socials.astro";
+---
+
+<BaseLayout pageTitle="KixiK.dev" lang="de">
+    <div class="flex flex-col gap-4 items-center not-prose">
+        <p>Hey! Ich bin Noel (KixiK ist mein Alias). Willkommen auf meinem Portfolio/Blog 👋</p>
+        <a href="/de/about" class="w-52 py-4 px-6 text-center font-bold rounded transition action-button"><span class="action-button__label">Über mich</span></a>
+        <a href="/de/projects" class="w-52 py-4 px-6 text-center font-bold rounded transition action-button"><span class="action-button__label">Projekte</span></a>
+        <a href="/de/blog" class="w-52 py-4 px-6 text-center font-bold rounded transition action-button"><span class="action-button__label">Blog</span></a>
+    </div>
+    <Socials />
+</BaseLayout>
+
+<style>
+    :global(.content-pad h1) {
+        text-align: center;
+    }
+
+    .action-button {
+        background-color: oklch(20.841% 0.04169 266.371 / 0.369);
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        line-height: 1;
+        text-decoration: none;
+    }
+
+    .action-button__label {
+        display: inline-block;
+        transform: translateY(0.32rem);
+    }
+
+    .action-button:hover {
+        background-color: color-mix(in oklch, oklch(37.2% 0.044 257.287), rgb(0, 0, 0) 12%);
+    }
+</style>

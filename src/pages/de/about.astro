@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Socials from "../../components/Socials.astro";
+import "../../styles/global.css";
+---
+
+<BaseLayout pageTitle="Über mich" showBackButton={true} lang="de">
+    <p>
+        Hey, ich heiße Noel. <span class="pronouns">(they/them)</span><br/>
+        Ich bin ein leidenschaftlicher Softwareentwickler und lebe in Deutschland.
+        Ich wurde in Spanien geboren, lebe aber seit über der Hälfte meines Lebens in Deutschland.
+        (Lustigerweise ist Englisch mit Abstand meine meistgenutzte Sprache!)<br/>
+        Ich habe um 2020 herum angefangen, 2D/3D-Digital Art zu lernen, speziell für Videospiele,
+        habe mich aber schließlich am meisten für Programmierung und Informatik im Allgemeinen interessiert.
+        Aktuell bin ich Post-Core-Curriculum-Student an <a href="https://www.42heilbronn.de/en/learning-model/">42Heilbronn</a>,
+        zur Zeit des Schreibens ungefähr zur Hälfte meines Praktikums bei Audi Sport.<br/>
+        Mein größtes Hobby ist elektronische Musikproduktion, die ich seit etwa 5 Jahren mache.
+        Ich werde hier in Zukunft mehr musikbezogene Sachen hinzufügen.<br/>
+        <br/>
+        Melde dich gerne über diese Kanäle:<br/>
+    </p>
+    <Socials />
+</BaseLayout>
+
+<style>
+    .pronouns {
+        background: linear-gradient(45deg, #f5d142, #ffffff, #b084f5, #111111);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-left: 0.35rem;
+        font-size: 0.9em;
+    }
+</style>

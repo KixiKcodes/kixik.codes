@@ -1,6 +1,26 @@
 ---
 const {pageTitle, transitionSpeed = 1200, fullHeight = false, showBackButton = false} = Astro.props;
 
+const pathname = Astro.url?.pathname ?? "/";
+const segments = pathname.split("/").filter(Boolean);
+const supportedLangs = ["en", "de", "es"];
+const hasLangPrefix = supportedLangs.includes(segments[0] ?? "");
+const langPrefix = hasLangPrefix ? `/${segments[0]}` : "";
+const restSegments = hasLangPrefix ? segments.slice(1) : segments;
+const withLang = (path) => (langPrefix ? `${langPrefix}${path}` : path);
+
+let backHref = "/";
+
+if (restSegments.length === 0) {
+    backHref = langPrefix || "/";
+} else if (restSegments[0] === "projects" && restSegments.length > 1) {
+    backHref = withLang("/projects");
+} else if (restSegments[0] === "posts" && restSegments.length > 1) {
+    backHref = withLang("/blog");
+} else {
+    backHref = langPrefix || "/";
+}
+
 const fadeDuration = Math.max(220, Math.round(transitionSpeed * 0.25));
 const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
 ---
@@ -97,6 +117,13 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
         transition: opacity var(--content-fade-duration, 300ms) ease,
             transform 0.2s ease;
         transform: translateX(-15px);
+        text-decoration: none;
+    }
+
+    .back-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        display: block;
     }
 
     :global(html.content-transitioning) .back-button {
@@ -119,15 +146,17 @@ const resizeDuration = Math.max(3500, Math.round(transitionSpeed * 2.5));
     data-full-height={fullHeight}
     style={`--content-fade-duration:${fadeDuration}ms; --content-resize-duration:${resizeDuration}ms;`}
 >
-    <button
+    <a
         class="back-button"
         data-hidden={!showBackButton}
-        type="button"
+        href={backHref}
         aria-label="Go back"
-        onclick="window.history.back()"
+        role="button"
     >
-        &#8592;
-    </button>
+        <svg class="back-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </a>
     <div class="content-inner" data-full-height={fullHeight}>
         <div class="content-pad">
             <h1>{pageTitle}</h1>

@@ -1,0 +1,85 @@
+---
+const supported = ["en", "de", "es"];
+const pathname = Astro.url?.pathname ?? "/";
+const segments = pathname.split("/").filter(Boolean);
+const hasLangPrefix = supported.includes(segments[0] ?? "");
+const currentLang = hasLangPrefix ? segments[0] : "en";
+const restSegments = hasLangPrefix ? segments.slice(1) : segments;
+const restPath = restSegments.length ? `/${restSegments.join("/")}` : "";
+const makeHref = (lang) => `/${lang}${restPath}`;
+---
+
+<nav class="site-language" aria-label="Language selector">
+    <a
+        class={`lang-button ${currentLang === "en" ? "is-active" : ""}`}
+        href={makeHref("en")}
+        aria-current={currentLang === "en" ? "page" : undefined}
+    >
+        EN
+    </a>
+    <span class="lang-sep" aria-hidden="true">|</span>
+    <a
+        class={`lang-button ${currentLang === "de" ? "is-active" : ""}`}
+        href={makeHref("de")}
+        aria-current={currentLang === "de" ? "page" : undefined}
+    >
+        DE
+    </a>
+    <span class="lang-sep" aria-hidden="true">|</span>
+    <a
+        class={`lang-button ${currentLang === "es" ? "is-active" : ""}`}
+        href={makeHref("es")}
+        aria-current={currentLang === "es" ? "page" : undefined}
+    >
+        ES
+    </a>
+</nav>
+
+<style>
+    .site-language {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.2rem 0 0.1rem;
+    }
+
+    .lang-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.6rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+    }
+
+    .lang-button.is-active {
+        color: var(--color-secondary);
+    }
+
+    .lang-button:hover {
+        color: white;
+    }
+
+    .lang-sep {
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+        .site-language {
+            gap: 0.35rem;
+            padding: 0.2rem 0 0.1rem;
+        }
+
+        .lang-button {
+            min-width: 2.2rem;
+            padding: 0.25rem 0.55rem;
+            font-size: 0.85rem;
+        }
+    }
+</style>
