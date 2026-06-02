@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/global.css';
-const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }))
+const localizedPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+const allPosts = (localizedPosts.length
+    ? localizedPosts
+    : Object.values(import.meta.glob('./en/posts/*.md', { eager: true })))
     .sort((a: any, b: any) => {
         const dateA = new Date(a.frontmatter?.pubDate ?? 0).getTime();
         const dateB = new Date(b.frontmatter?.pubDate ?? 0).getTime();

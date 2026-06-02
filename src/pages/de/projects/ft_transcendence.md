@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
+layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'ft_transcendence'
 pubDate: '06.11.2025'
 description: 'Final project of the 42 Core Curriculum. Full-stack prototype of a web application centered around classic Pong.'

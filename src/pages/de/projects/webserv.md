@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
+layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'webserv'
 pubDate: '12.07.2025'
 description: 'A basic web server in C++ based off NGINX plus a test website to host.'

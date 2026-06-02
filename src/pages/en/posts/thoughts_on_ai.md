@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
+layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'AI: The Good, the Bad and the Mediocre'
 pubDate: 01.06.2026
 description: 'A few of the things I think about AI and its role in society.'
