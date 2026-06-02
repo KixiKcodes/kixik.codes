@@ -8,7 +8,15 @@ tags: ["Kotlin", "Android"]
 
 ## About
 
-Around Halloween of 2025 I came accross this neat little game called Blood on the Clocktower through some peers. I watched a few videos about it and quickly fell in love. Blood on the Clocktower is a social deduction game similar to Werewolf or Mafia, mainly meant to be played in a public social setting. The game is based off of "scripts", which are selections of characters and rules desgined by the game creators or the community. Scripts are designed such that the roles work well in conjunction with eachother. Where I saw a gap to fill was in the game setup stage. BotC is played with a game master (referred to as the "Storyteller") who is in charge of assigning the roles and handling all information given to each player every round. As you can imagine, this person has a lot of responsibility and I can confirm, having been the Storyteller a few times. So you know what they say, necessity is the mother of invention. I started this project out in C# as a CLI application and later ported it to Kotlin as an Android application. I made use of the official assets taken from the BotC wiki and used Jetpack Compose to build the UI. In its current state, the App allows you to generate a full list of assigned roles to players of your choice based on a selected script. The scripts are built into the app but are just JSONs that I parse, so the plan is to allow the user to import their own scripts in the future.
+Around Halloween of 2025 I came accross this neat little game called Blood on the Clocktower through some peers. I watched a few videos about it and quickly fell in love. Blood on the Clocktower is a social deduction game similar to Werewolf or Mafia, mainly meant to be played in a public social setting.
+
+The game is based off of "scripts", which are selections of characters and rules desgined by the game creators or the community. Scripts are designed such that the roles work well in conjunction with eachother. Where I saw a gap to fill was in the game setup stage. BotC is played with a game master (referred to as the "Storyteller") who is in charge of assigning the roles and handling all information given to each player every round. As you can imagine, this person has a lot of responsibility and I can confirm, having been the Storyteller a few times.
+
+So you know what they say, necessity is the mother of invention.
+
+I started this project out in C# as a CLI application and later ported it to Kotlin as an Android application. I made use of the official assets taken from the BotC wiki and used Jetpack Compose to build the UI.
+
+In its current state, the App allows you to generate a full list of assigned roles to players of your choice based on a selected script. The scripts are built into the app but are just JSONs that I parse, so the plan is to allow the user to import their own scripts in the future.
 
 <div style="display: flex; gap: 1rem; align-items: flex-start;">
 	<img src="/images/script_menu.png" alt="assignments1" style="width: calc(50% - 0.5rem); aspect-ratio: 450 / 919; object-fit: cover;" />

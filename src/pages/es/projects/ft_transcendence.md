@@ -2,77 +2,80 @@
 layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'ft_transcendence'
 pubDate: '06.11.2025'
-description: 'Final project of the 42 Core Curriculum. Full-stack prototype of a web application centered around classic Pong.'
+description: 'Proyecto final del Core Curriculum de 42. Prototipo full-stack de una aplicación web centrada en el clásico Pong.'
 tags: ["TypeScript", "JavaScript", "HTML", "CSS", "Docker"]
 ---
 
-In collaboration with my peers [Jacob](https://github.com/Cimex404), [Tobias](https://github.com/tmkeil) and [Betül](https://github.com/Bebuber).
+En colaboración con mis compañeros [Jacob](https://github.com/Cimex404), [Tobias](https://github.com/tmkeil) y [Betül](https://github.com/Bebuber).
 
-## About
-This is the final project of the 42 Common Core. It is meant to put all of our skills to the test by making a full-stack web application with tons of features. The premise is to make our own version of Pong with some modern features of our choice. The project is comprised of a mandatory part and optional Major and Minor modules which count toward the final score.
+## Acerca del proyecto
+Este es el proyecto final del Common Core de 42. Su objetivo es poner a prueba todas nuestras habilidades mediante el desarrollo de una aplicación web full-stack con una gran cantidad de funcionalidades. La premisa consiste en crear nuestra propia versión de Pong con algunas características modernas elegidas por nosotros. El proyecto se compone de una parte obligatoria y de módulos opcionales Major y Minor que contribuyen a la nota final.
 
-![Main Menu](/images/transcendence_menu.png)
+![Menú Principal](/images/transcendence_menu.png)
 
-## Base Features
-The basic features that Transcendence had to have are a local game of pong between two players and a round-based tournament system between multiple players. The gameplay must be faithful to that of the original 1972 game. How the tournament system works exactly is left up to us to decide, so we took some liberties there. Our website has to be secure and protected against SQL injections and malicious API calls. I focused primarily on this aspect, creating the login/register flow, 2FA system, JWT and cookie management and API protection with Authorization pre-handlers.
+## Funcionalidades básicas
+Las funcionalidades básicas que debía incluir Transcendence son una partida local de Pong entre dos jugadores y un sistema de torneos por rondas para varios jugadores. La jugabilidad debe ser fiel a la del juego original de 1972. El funcionamiento exacto del sistema de torneos queda a nuestra elección, por lo que nos tomamos ciertas libertades en su diseño. Nuestro sitio web también debe ser seguro y estar protegido contra inyecciones SQL y llamadas maliciosas a la API. Me centré principalmente en este aspecto, desarrollando el flujo de inicio de sesión y registro, el sistema de autenticación en dos factores (2FA), la gestión de JWT y cookies, así como la protección de la API mediante pre-handlers de autorización.
 
-## Modules
-We picked 9 major modules and 4 minor modules. A minor module is worth half a major one, thus adding up to a total of 11 module points. The requirement for 100% grade is 7, meaning we have the maximum bonus of 125%.
+## Módulos
+Elegimos 9 módulos Major y 4 módulos Minor. Un módulo Minor vale la mitad de un Major, lo que suma un total de 11 puntos de módulos. El requisito para obtener una calificación del 100% es de 7 puntos, por lo que alcanzamos la bonificación máxima del 125%.
 
-### Major Modules:
-- **Backend Framework (Fastify)** - Our backend routes and endpoints use a Fastify for JavaScript.
-- **Remote Authentication** - There is support for the Google Authenticator as a 3rd party authentication.
-- **Remote Players** - The game can be played online with remote players via use of web sockets.
-- **Live Chat** - There is a live chat system where players can send messages, game invites and view eachother's statistics.
-- **User Dashboard and Statistics** - There is a dynamic dashboard where users can view eachother's statistics and can send friend requests. There is also a profile picture system and a blocking system.
-- **AI Opponent** - An additional mode where players can play endlessly against an AI with three different difficulty settings.
-- **Two-Factor Authentication and JWTs** - Sessions are stored with browser cookies and verified using JSON Web Tokens. Users can activate 2FA and scan a QR to link their Google Authenticator to their profile.
-- **3D Graphics (Babylon)** - The game is rendered in 3D using a graphical library called Babylon.js (which is where our team got its name from).
-- **Server-Side Pong API** - In conjunction with the remote players system we calculate the game's data such as paddle positions and ball velocity on the server and broadcast to the clients via a custom API.
+### Módulos Major:
+- **Framework Backend (Fastify)** - Nuestras rutas y endpoints del backend utilizan Fastify para JavaScript.
+- **Autenticación Remota** - Existe soporte para Google Authenticator como sistema de autenticación de terceros.
+- **Jugadores Remotos** - El juego puede jugarse en línea con jugadores remotos mediante el uso de WebSockets.
+- **Chat en Tiempo Real** - Existe un sistema de chat en vivo donde los jugadores pueden enviar mensajes, invitaciones a partidas y consultar las estadísticas de otros usuarios.
+- **Panel de Usuario y Estadísticas** - Hay un panel dinámico donde los usuarios pueden consultar las estadísticas de otros jugadores y enviar solicitudes de amistad. También incluye un sistema de fotos de perfil y un sistema de bloqueo de usuarios.
+- **Oponente IA** - Un modo adicional donde los jugadores pueden jugar indefinidamente contra una inteligencia artificial con tres niveles de dificultad.
+- **Autenticación en Dos Factores y JWT** - Las sesiones se almacenan mediante cookies del navegador y se verifican utilizando JSON Web Tokens. Los usuarios pueden activar 2FA y escanear un código QR para vincular Google Authenticator a su perfil.
+- **Gráficos 3D (Babylon)** - El juego se renderiza en 3D utilizando una biblioteca gráfica llamada Babylon.js (de donde nuestro equipo tomó su nombre).
+- **API de Pong en el Servidor** - Junto con el sistema de jugadores remotos, calculamos en el servidor los datos del juego, como las posiciones de las paletas y la velocidad de la pelota, y los enviamos a los clientes mediante una API personalizada.
 
-### Minor Modules:
-- **Frontend Framework** (Tailwind and Vite) - The frontend uses Tailwind CSS for UI design and rendering, as well as Vite for fast reload.
-- **Database Implementation (sqlite)** - We use a database to store user data, friend and block data and game data.
-- **DevOps Monitoring System (Prometheus, Grafana and Alert Manager)** - Three additional containers have been set up to gather metrics and display them. There is also an alert system linked to a custom Slack channel.
-- **Multiple Browser Compatibility** - Our Transcendence works on multiple browsers (though Firefox is its native one).
+### Módulos Minor:
+- **Framework Frontend** (Tailwind y Vite) - El frontend utiliza Tailwind CSS para el diseño y renderizado de la interfaz de usuario, además de Vite para recargas rápidas.
+- **Implementación de Base de Datos (SQLite)** - Utilizamos una base de datos para almacenar información de usuarios, amistades, bloqueos y datos de partidas.
+- **Sistema de Monitorización DevOps (Prometheus, Grafana y Alert Manager)** - Se configuraron tres contenedores adicionales para recopilar métricas y visualizarlas. También existe un sistema de alertas conectado a un canal personalizado de Slack.
+- **Compatibilidad con Múltiples Navegadores** - Nuestro Transcendence funciona en varios navegadores (aunque Firefox es su navegador principal).
 
-![Login or Register](/images/transcendence_login.png)
+![Iniciar sesión o registrarse](/images/transcendence_login.png)
 
-![Gameplay GIF](/images/gameplay.gif)
+![GIF de jugabilidad](/images/gameplay.gif)
 
-## Usage
-- You can simply clone this repo to your machine:
+## Uso
+- Puedes clonar este repositorio en tu máquina:
 ```sh
 git clone https://github.com/KixiKCodes/ft_transcendence
 ```
 
-- You **must** make a `.env` file in the root of the repository with these variables:
-```conf
-JWT_SECRET=[JSON Web Token Secret Key]
+* Debes crear un archivo `.env` en la raíz del repositorio con las siguientes variables:
 
-GF_SECURITY_ADMIN_USER=[Grafana Admin Username]
-GF_SECURITY_ADMIN_PASSWORD=[Grafana Admin Password]
+```conf
+JWT_SECRET=[Clave secreta para JSON Web Token]
+
+GF_SECURITY_ADMIN_USER=[Nombre de usuario administrador de Grafana]
+GF_SECURITY_ADMIN_PASSWORD=[Contraseña del administrador de Grafana]
 GF_AUTH_ANONYMOUS_ENABLED=false
 GF_USERS_ALLOW_SIGN_UP=true
 
-SLACK_WEBHOOK_URL=[Slack Webhook URL for Alert Manager]
+SLACK_WEBHOOK_URL=[URL del Webhook de Slack para Alert Manager]
 ```
 
-- Then you can use the Makefile to quickly build everything:
-`make build`
-(You can use `make help` for info on additional Make commands)
+* Después, puedes utilizar el Makefile para compilar todo rápidamente:
+  `make build`
 
-- Once everything is up, you can navigate to `https://localhost:8443/` and bypass the warning regarding the self-signed SSL certificate.
+(Puedes usar `make help` para obtener información sobre comandos adicionales de Make).
 
-- You are up and running!
+* Una vez que todo esté en funcionamiento, navega a `https://localhost:8443/` y omite la advertencia relacionada con el certificado SSL autofirmado.
 
-## Credits
-**Jacob Graf** - Game design, game logic, 3D graphics, user statistics, general project architecture, implementation of all gamemodes, playtesting.
+* ¡Y listo! El proyecto estará funcionando.
 
-**Tobias Keil** - Website routing and web sockets, networking and remote player systems, database and backend setup, general project architecture, live chat and dashboard implementations, user friending, blocking and invites system, playtesting.
+## Créditos
 
-**Betül Büber** - DevOps and monitoring systems, playtesting.
+**Jacob Graf** - Diseño del juego, lógica de juego, gráficos 3D, estadísticas de usuario, arquitectura general del proyecto, implementación de todos los modos de juego y pruebas.
 
-**Myself** - Cybersecurity, user registration flow, authentication and authorization systems, user settings, frontend and UI design, project management, sound design and music, playtesting, documentation.
+**Tobias Keil** - Enrutamiento web y WebSockets, sistemas de red y jugadores remotos, configuración de base de datos y backend, arquitectura general del proyecto, implementación del chat en vivo y del panel de usuario, sistemas de amistades, bloqueos e invitaciones, y pruebas.
 
-_Special Thanks:_ [skyecodes](https://github.com/skyecodes) for help with profile picture system implementation, playtesting and providing a server to host the project for online testing. Also, much needed moral support.
+**Betül Büber** - Sistemas DevOps y de monitorización, y pruebas.
+
+**Yo mismo** - Ciberseguridad, flujo de registro de usuarios, sistemas de autenticación y autorización, configuración de usuario, frontend y diseño de interfaz, gestión del proyecto, diseño de sonido y música, pruebas y documentación.
+
+*Agradecimientos especiales:* [skyecodes](https://github.com/skyecodes) por su ayuda en la implementación del sistema de fotos de perfil, las pruebas y por proporcionar un servidor para alojar el proyecto durante las pruebas en línea. Además, por el apoyo moral, que fue muy necesario.

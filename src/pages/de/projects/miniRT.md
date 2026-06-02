@@ -2,71 +2,94 @@
 layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'miniRT'
 pubDate: '09.04.2025'
-description: '3D raytracer made in pure C using MLX42.'
+description: '3D-Raytracer in reinem C, basierend auf MLX42.'
 tags: ["C"]
 ---
 
 ![test_scene](/images/test_scene.png)
 
-_This project was made in collaboration with [Cimex](https://github.com/Cimex404). He has uploaded it as his own repository as well!_
+_Dieses Projekt wurde in Zusammenarbeit mit [Cimex](https://github.com/Cimex404) entwickelt. Er hat es ebenfalls in seinem eigenen Repository veröffentlicht!_
 
-## About
-MiniRT is a basic 3D ray-tracer that uses the MLX42 graphical library (OpenGL windows) to render a scene based off a scene file containing camera, light and object data.\
-It works by casting a ray for each screen pixel out of the camera and calculating intersections with objects in 3D space. The objects have surface normals that dictate how the ray should behave when bouncing back to the light source. The scene currently can only have one point light and all rays trace back to it. Shadows are calculated in two different ways; shadow rays and ambient occlusion. Shadow rays are generated where the ray hits an object and cannot continue, simulating how the shadow would be cast onto whichever surface it occluded. Ambient occlusion on the other hand is purely proximity-based between two very close objects and simulates how light gets trapped in tight spaces and diffuses into darkness. Both of these shading processes use samples and pseudo-random scatter to simulate diffusion. The higher the samples the less noisy the shadows look in exchange for computation time. Additionally, some extra visual features have been implemented, as well as basic run-time user controls. Memory is handled with a rudimentary garbage collection system and there is a robust logging and error handling system for convenience.\
-Despite being a project for 42, the latest and all future version will deviate from **the norm**. If you wish to see a fully norm-compatible version that we submitted, check the commit history for that point in development!
+## Über das Projekt
+
+MiniRT ist ein einfacher 3D-Raytracer, der die MLX42-Grafikbibliothek (OpenGL-Fenster) verwendet, um eine Szene basierend auf einer Szenendatei zu rendern. Diese enthält Informationen zu Kamera, Lichtquellen und Objekten.
+
+Das Rendering funktioniert, indem für jedes Pixel ein Strahl aus der Kamera in die 3D-Welt geschickt wird und Schnittpunkte mit Objekten berechnet werden. Die Objekte besitzen Oberflächennormalen, die bestimmen, wie der Strahl in Richtung Lichtquelle reflektiert wird.
+
+Die Szene kann derzeit nur eine Punktlichtquelle enthalten, und alle Strahlen werden auf diese zurückgeführt.
+
+Schatten werden auf zwei Arten berechnet: Shadow Rays und Ambient Occlusion. Shadow Rays werden dort erzeugt, wo der Strahl auf ein Objekt trifft und nicht weiterlaufen kann, wodurch der Schattenwurf simuliert wird. Ambient Occlusion basiert hingegen rein auf der Nähe zwischen sehr dicht beieinanderliegenden Objekten und simuliert, wie Licht in engen Bereichen „gefangen“ wird und in Dunkelheit übergeht.
+
+Beide Verfahren verwenden Sampling und pseudozufällige Streuung zur Simulation der Lichtdiffusion. Je höher die Anzahl der Samples, desto weniger verrauscht wirken die Schatten – allerdings auf Kosten der Rechenzeit.
+
+Zusätzlich wurden einige visuelle Features sowie grundlegende Laufzeit-User-Controls implementiert. Das Speichermanagement erfolgt über ein rudimentäres Garbage-Collection-System, ergänzt durch ein Logging- und Fehlerbehandlungssystem.
+
+Obwohl es sich um ein 42-Projekt handelt, wird die aktuelle und zukünftige Version von der Norm abweichen. Wer eine normkonforme Version sehen möchte, kann im Commit-Verlauf zurückgehen.
 
 ## Features
-- **Primitive Assets:**\
-	Currently the project features three primitive objects: planes, spheres and cylinders. Each have unique parameters that can be set in the scene file. More info in _Usage_.
-- **Lighting:**\
-	The scene is lit by two sources, an ambient light and a point light. The ambient light acts as a global illumination and also controls the base atmosphere color where no objects are hit (like a skylight in other 3D software). The point light is a single point out of which light is cast. It is currently invisible on its own and only casts light onto objects directly. It also has a fall-off distance and does not cast shadows indefinitely far away.
-- **Roughness:**\
-	To simulate different materials, we implemented a roughness index which can be optionally tweaked for every object. This roughness will determine how much of a specular highlight forms at the point in the object in which the surface normal directly reflects light rays back into the camera.
-- **Reflections:**\
-	Some basic reflections have been implemented and each object has an optional reflectivity index, much like roughness. The maximum reflections are set as a constant in each preset, with the highest quality allowing up to 100 reflections.
-- **User Input:**\
-	Key hooks have been added to allow for some user input. The controls allow you to move, rotate and change thw shadow sample dynamically.
-	Keybinds:
-	- `w` - move forward
-	- `s` - move backward
-	- `a` - move left
-	- `d` - move right
-	- `↑` - rotate up (until looking straight up)
-	- `↓` - rotate down (until looking straight down)
-	- `←` and `→` - rotate left and right respectively (loops back around)
-	- Numpad `+` and `-` - increase/decrease shadow samples by 16 (from a range of 1 to 112)
-- **Quality Presets:**\
-	In order to test scenes easily I have made three different quality presets that change the default samples, maximum reflections and window dimensions. The three presets are:
-	- _Standard_ - 800 x 500, 64 samples, 50 reflections (a nice balance, samples can be lowered manually for slow movement)
-	- _Low_ - 320 x 200, 1 sample, 1 reflection (allows smooth movement around the scene at the cost of poor quality)
-	- _High_ - 1600 x 1000, 80 samples, 100 reflections (for high quality renders, movement is essentially impossible)
-	To change the quality, you can compile with `make QUALITY=LOW` or `QUALITY=HIGH`. If compiled without this flag it will default to standard quality.
-- **Logging System:**\
-	The program logs all objects when parsing them and reports any issues with warnings or errors as they are found. When rendering it also displays the percentage of processed pixels in intervals of 10.
 
-## Usage
-You can simply compile with `make`. To clean binaries use `make clean` or `make fclean` for a full wipe of the executable. You can also specify the quality as previously described.
-To run miniRT on a scene you must use this command:
+- **Primitive Objekte**
+  Aktuell unterstützt das Projekt drei primitive Objekte: Ebenen, Kugeln und Zylinder. Diese besitzen jeweils eigene Parameter, die in der Szenendatei definiert werden.
+
+- **Beleuchtung**
+  Die Szene wird durch ein Umgebungslicht und eine Punktlichtquelle beleuchtet. Das Umgebungslicht wirkt als globale Beleuchtung und definiert die Grundfarbe, wenn kein Objekt getroffen wird. Die Punktlichtquelle ist ein einzelner Lichtpunkt mit Falloff.
+
+- **Rauigkeit**
+  Ein Rauigkeitswert pro Objekt beeinflusst die Intensität von Glanzlichtern.
+
+- **Reflexionen**
+  Jedes Objekt kann reflektierend sein. Die Anzahl der maximalen Reflexionen ist begrenzt (bis zu 100 im High-Preset).
+
+- **Benutzereingaben**
+
+  - `w` – vorwärts
+  - `s` – rückwärts
+  - `a` – links
+  - `d` – rechts
+  - `↑` – hoch rotieren
+  - `↓` – runter rotieren
+  - `←` / `→` – links/rechts rotieren
+  - Numpad `+` / `-` – Schatten-Samples anpassen
+
+- **Qualitäts-Presets**
+  - Standard: 800×500, 64 Samples, 50 Reflexionen
+  - Low: 320×200, 1 Sample, 1 Reflexion
+  - High: 1600×1000, 80 Samples, 100 Reflexionen
+
+  Auswahl über:
+  ```sh
+  make QUALITY=LOW
+  make QUALITY=HIGH
+  ```
+- **Logging-System**
+    Alle geparsten Objekte werden protokolliert, inklusive Warnungen und Fehlern.
+
+## Nutzung
+Du kannst das Projekt einfach mit `make` kompilieren. Zum Entfernen der Build-Artefakte verwende `make clean` oder `make fclean` für eine vollständige Bereinigung des Executables. Die Qualitätsstufe kann ebenfalls wie zuvor beschrieben festgelegt werden.
+
+Um miniRT mit einer Szene auszuführen, verwende folgenden Befehl:
 
 ```bash
-./miniRT "[scene file / path to scene file]"
+./miniRT "[Szenendatei / Pfad zur Szenendatei]"
 ```
 
-The scene file must have the `.rt` extension and must follow a specific format:
-- The scene _must_ include a single ambient light (`A`), a single camera (`C`) and a single point light (`L`).
-- The **ambient light** parameters are `intensity` from 0 to 1 as a float and `color` in RGB format as three values from 0 to 255. _Color works this way for all assets._
-- The **camera** parameters are `position` x,y,z `rotation` x,y,z as values from -1 to 1 and `focal length` or FOV as a value from 1 to 180.
-- The **point light** parameters are `position` x,y,z as well as intensity and color in the same format as the ambient light.
-- The scene can have any amount of objects out of a selection of **planes** (`pl`), **spheres** (`sp`) and **cylinders** (`cy`).
-- Planes extend infinitely and have a single normal that points in the direction of their rotation vector. They have `position` x,y,z `rotation` x,y,z and `color`.
-- Spheres have `position` like all other objects, no rotation as it has no effect on the a sphere, `diameter` as a float and `color`, as per usual.
-- Cylinders have `position` and `rotation` in the usual format as well as `diameter`, `height` and `color`.
-- If any of these objects parameters is missing, in the wrong order or otherwise invalid the object will be ignored and not rendered. If the mandatory assets (ambient, camera and point light) are missing or invalid the window will not launch at all.
-- For all objects, in addition to their necessary parameters you can also add `roughness` and `reflectivity` as floats from 0 to 1 in that order. If not added, these parameters will default to some preset values.
-- The parameters can be space-separated as much as you like and have any empty lines between assets. Any unrecognized assets will be ignored.
-- You can also add commented lines to the scene file. To do this, simply add a `#` to the **start** of the line.
+Die Szenendatei muss die Endung `.rt` besitzen und einem bestimmten Format folgen:
 
-An example scene would look like this:
+- Die Szene _muss_ genau ein Umgebungslicht (`A`), eine Kamera (`C`) und eine Punktlichtquelle (`L`) enthalten.
+- Die Parameter des **Umgebungslichts** sind `intensity` als Float von 0 bis 1 sowie `color` im RGB-Format mit drei Werten von 0 bis 255. _Farben funktionieren für alle Assets auf diese Weise._
+- Die **Kamera**-Parameter sind `position` x,y,z, `rotation` x,y,z (Werte von -1 bis 1) sowie `focal length` bzw. FOV (1 bis 180).
+- Die **Punktlichtquelle** besitzt `position` x,y,z sowie `intensity` und `color` im gleichen Format wie das Umgebungslicht.
+- Die Szene kann beliebig viele Objekte aus **Ebenen** (`pl`), **Kugeln** (`sp`) und **Zylindern** (`cy`) enthalten.
+- Ebenen sind unendlich groß und besitzen eine Normale, die durch ihren Rotationsvektor definiert wird. Sie haben `position` x,y,z, `rotation` x,y,z und `color`.
+- Kugeln besitzen wie alle Objekte eine `position`, jedoch keine Rotation (hat keinen Effekt auf eine Kugel), außerdem `diameter` als Float und `color`.
+- Zylinder besitzen `position` und `rotation` im üblichen Format sowie `diameter`, `height` und `color`.
+- Falls Parameter fehlen, in falscher Reihenfolge angegeben sind oder ungültig sind, wird das Objekt ignoriert und nicht gerendert. Falls die Pflichtobjekte (Umgebungslicht, Kamera und Punktlicht) fehlen oder ungültig sind, wird das Fenster nicht gestartet.
+- Für alle Objekte können zusätzlich `roughness` und `reflectivity` als Float-Werte von 0 bis 1 in dieser Reihenfolge angegeben werden. Falls sie nicht gesetzt sind, werden Standardwerte verwendet.
+- Parameter können beliebig durch Leerzeichen getrennt werden; auch leere Zeilen zwischen Assets sind erlaubt. Nicht erkannte Assets werden ignoriert.
+- Kommentare können hinzugefügt werden, indem die Zeile mit `#` beginnt.
+
+Beispiel:
+
 ```sh
 #AST  POSITION        ROTATION    LUM/FOV RAD HGT  COLOR       ROUGH REFLECT
 A                                 0.1              240,255,255
@@ -83,9 +106,8 @@ cy   50.0,7,-8        -1,0,1              20 15.5  0,255,255
 sp   -5,0,-21                             16       255,255,255 0
 ```
 
-**NOTE:** The project depends on my [libft](https://github.com/KixiKcodes/libft) utilities library as well as [MLX42](https://github.com/codam-coding-college/MLX42) for graphics. Both are added as submodules in the repository.
+## Render-Galerie
 
-## Render Gallery
 ![alien_planet](/images/alien_planet.png)
 ![mirror_room](/images/mirror_room.png)
 ![underwater_temple](/images/underwater_temple.png)
@@ -93,14 +115,15 @@ sp   -5,0,-21                             16       255,255,255 0
 ![eval_scene_7](/images/eval_scene_7.png)
 ![octagon](/images/octagon.png)
 
-## Future Plans
-This project has undoubtedly been my favorite from the 42 core curriculum so far. I look forward to adding many advanced features, _though no longer strictly following the 42 norm or project rules_.
-Here is a list of the features I would like to add:
-- Performance improvements such as multi-threading and GPU delegation. Potentially bounding volume hierarchy.
-- Bloom to the point light, such that we can see where it is exactly.
-- Better handling of large scenes where the shadows are cast long distances.
-- A cuboid primitive object.
-- Support for the **obj** 3D format, allowing for rendering of any 3D model.
-- _Maybe_ light refraction and caustics.
-- Bump-mapping and textures.
-- _If I'm feeling crazy_, a way to edit the assets dynamically during runtime.
+## Zukunftspläne
+
+Dieses Projekt gehört zu meinen Favoriten im 42-Core-Curriculum. Geplant ist die Erweiterung um:
+
+* Performance-Verbesserungen (Multithreading, GPU, BVH)
+* Bloom-Effekt für die Punktlichtquelle
+* besseres Handling großer Szenen
+* kubisches Objekt
+* Unterstützung des OBJ-Formats
+* Lichtbrechung und Kaustiken
+* Bump Mapping und Texturen
+* Bearbeitung von Assets zur Laufzeit

@@ -2,13 +2,21 @@
 layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'Grimoire'
 pubDate: '02.05.2026'
-description: 'A Blood on the Clocktower game management app for Android.'
+description: 'Eine Blood on the Clocktower-Game-Management-App für Android.'
 tags: ["Kotlin", "Android"]
 ---
 
-## About
+## Über das Projekt
 
-Around Halloween of 2025 I came accross this neat little game called Blood on the Clocktower through some peers. I watched a few videos about it and quickly fell in love. Blood on the Clocktower is a social deduction game similar to Werewolf or Mafia, mainly meant to be played in a public social setting. The game is based off of "scripts", which are selections of characters and rules desgined by the game creators or the community. Scripts are designed such that the roles work well in conjunction with eachother. Where I saw a gap to fill was in the game setup stage. BotC is played with a game master (referred to as the "Storyteller") who is in charge of assigning the roles and handling all information given to each player every round. As you can imagine, this person has a lot of responsibility and I can confirm, having been the Storyteller a few times. So you know what they say, necessity is the mother of invention. I started this project out in C# as a CLI application and later ported it to Kotlin as an Android application. I made use of the official assets taken from the BotC wiki and used Jetpack Compose to build the UI. In its current state, the App allows you to generate a full list of assigned roles to players of your choice based on a selected script. The scripts are built into the app but are just JSONs that I parse, so the plan is to allow the user to import their own scripts in the future.
+Um Halloween 2025 bin ich durch einige Bekannte auf das Spiel *Blood on the Clocktower* gestoßen. Ich habe mir einige Videos dazu angesehen und war schnell begeistert. *Blood on the Clocktower* ist ein Social-Deduction-Spiel ähnlich wie Werewolf oder Mafia, das hauptsächlich in sozialen Gruppen gespielt wird.
+
+Das Spiel basiert auf sogenannten "Scripts", also Zusammenstellungen von Charakteren und Regeln, die von den Entwicklern oder der Community erstellt werden. Diese Scripts sind so aufgebaut, dass die Rollen gut miteinander funktionieren. Eine Lücke, die ich dabei gesehen habe, liegt in der Spielvorbereitung. *BotC* wird mit einem Spielleiter ("Storyteller") gespielt, der für die Zuteilung der Rollen sowie für die Verwaltung aller Informationen im Spielverlauf verantwortlich ist. Wie man sich vorstellen kann, trägt diese Person viel Verantwortung, das kann ich auch aus eigener Erfahrung bestätigen.
+
+Man sagt nicht umsonst: Not macht erfinderisch.
+
+Ich habe das Projekt zunächst in C# als CLI-Anwendung begonnen und später nach Kotlin als Android-App portiert. Dabei habe ich offizielle Assets aus dem BotC-Wiki verwendet und die UI mit Jetpack Compose umgesetzt.
+
+Aktuell erlaubt die App die Generierung einer vollständigen Rollenzuteilung für eine beliebige Spieleranzahl basierend auf einem ausgewählten Script. Die Scripts sind in die App integriert, bestehen aber lediglich aus JSON-Dateien, die ich parse. Geplant ist, dass Nutzer in Zukunft eigene Scripts importieren können.
 
 <div style="display: flex; gap: 1rem; align-items: flex-start;">
 	<img src="/images/script_menu.png" alt="assignments1" style="width: calc(50% - 0.5rem); aspect-ratio: 450 / 919; object-fit: cover;" />
@@ -17,24 +25,24 @@ Around Halloween of 2025 I came accross this neat little game called Blood on th
 
 ## Features
 
-- Script manager that dynamically parses scripts.
-- Script preview menu that allows the user to preview all the scripts parsed.
-- Game setup screen with a script selection dropdown and player adder.
-- Algorithm that automatically assigns roles and subroles to the added players based on the game rules and dynamics.
-- Preview screen showing all player's assigned roles and other relevant info for the Storyteller.
-- System for computing active role Jinxes (special rules to resolve pairs of conflicting roles).
+- Script-Manager, der Scripts dynamisch parst.
+- Script-Vorschau, die alle geladenen Scripts anzeigt.
+- Spiel-Setup-Screen mit Script-Auswahl und Spieler-Management.
+- Algorithmus zur automatischen Zuweisung von Rollen und Subrollen basierend auf Spielregeln und -dynamik.
+- Vorschau-Screen für den Storyteller mit allen zugewiesenen Rollen und relevanten Informationen.
+- System zur Berechnung aktiver Rollen-Jinxes (Sonderregeln zur Auflösung von Konflikten zwischen Rollen).
 
 <div style="display: flex; gap: 1rem; align-items: flex-start;">
 	<img src="/images/script_assigned1.png" alt="assignments1" style="width: calc(50% - 0.5rem); height: auto;" />
 	<img src="/images/script_assigned2.png" alt="assignments2" style="width: calc(50% - 0.5rem); height: auto;" />
 </div>
 
-## Future Plans
+## Zukunftspläne
 
-I actually have pretty long term plans for this project, I can't promise anything withing reasonable time but some of my ideas are:
+Ich habe für dieses Projekt einige langfristige Pläne. Ich kann nicht garantieren, dass alles in absehbarer Zeit umgesetzt wird, aber unter anderem sind folgende Ideen vorgesehen:
 
-- Add final result screen with all players arranged in their positions with their roles/subroles visible.
-- Add Loric and Fabled/Jinxes display to said final result screen.
-- Add a full game loop that allows the storyteller to advance through the game's rounds with all info being kept track of.
-- Port to PC via Kotlin Multiplatform.
-- Automate games entirely (auto-storyteller).
+- Hinzufügen eines Endbildschirms mit allen Spielern, ihren Positionen sowie sichtbaren Rollen/Subrollen.
+- Anzeige von Loric sowie Fabled/Jinxes auf diesem Endbildschirm.
+- Implementierung eines vollständigen Game-Loops, der es dem Storyteller ermöglicht, den Spielverlauf inklusive aller Informationen zu verwalten.
+- Portierung auf PC mittels Kotlin Multiplatform.
+- Vollständige Automatisierung des Spiels (Auto-Storyteller).

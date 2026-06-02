@@ -2,127 +2,134 @@
 layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'webserv'
 pubDate: '12.07.2025'
-description: 'A basic web server in C++ based off NGINX plus a test website to host.'
+description: 'Ein Webserver in C++ basierend auf NGINX sowie eine Test-Website zum Hosten.'
 tags: ["C++", "HTML", "CSS"]
 ---
 
-## About
+## Über das Projekt
 
-Our server manages connections using a synchronous I/O multiplexing system. Sockets are kept alive for each incoming connection
-and a timeout system ensures that they are closed if no activity occurs in the time given via config. Our config is rather flexible, allowing for precise location premissions and settings. CGI can be executed and configured by setting a CGI script directory. Timeout time and max body size can also be set for each server. Additionally, any amount of servers can be set up in a single config.
+Unser Server verwaltet Verbindungen mithilfe eines synchronen I/O-Multiplexing-Systems. Sockets bleiben für jede eingehende Verbindung aktiv, und ein Timeout-System stellt sicher, dass sie geschlossen werden, wenn innerhalb der in der Konfiguration definierten Zeit keine Aktivität erfolgt. Die Konfiguration ist flexibel und erlaubt präzise Standortberechtigungen und Einstellungen. CGI kann ausgeführt und über ein CGI-Skriptverzeichnis konfiguriert werden. Timeout-Zeit und maximale Body-Größe können ebenfalls pro Server gesetzt werden. Zusätzlich können beliebig viele Server in einer einzigen Konfiguration definiert werden.
 
 ## Features
 
-- _Socket Management:_
-  We use `poll()` to manage incoming connections efficiently. Servers can handle any ammout of simultaneous requests without crashing.
-- _HTTP Methods:_
-  Currently the implemented methods are `GET`, `POST` and `DELETE`. They must be set explicitly for each location in the server root through the config file. `GET` sends back requested data to the client. `POST` uploads data from the client to the server's upload store (also set in the config). `DELETE` removes requested data from the server entirely. Obviously, these methods have safety measures.
-- _Config Directives:_
-  There are many configuration directives that can be used to specify various features of your servers. There are always defaults as well, to fall back on any missing directives. A detailed table of these directives is shown in the following section.
-- _CGI Script Execution:_
-  Our servers can handle CGI script execution which can be specified via the `cgi-path` directive. This will set the path that the server will use to identify CGI-specific requests.
-- _Example Pages and Config:_
-  The project comes with a default configuration file and an example website with multiple HTML pages and CSS styling. We made an upload page where you can easily test POST requests and a CGI testing page where input can be sent to a sample program that will process and respond through a script as HTML.
-- _Verbose Logging:_
-  We also made a rebust logging and debugging system that reports useful information back to the user during runtime, such as request information and errors.
+- _Socket-Management:_
+  Wir verwenden `poll()`, um eingehende Verbindungen effizient zu verwalten. Server können eine beliebige Anzahl gleichzeitiger Anfragen verarbeiten, ohne abzustürzen.
 
-## Usage
+- _HTTP-Methoden:_
+  Aktuell implementiert sind `GET`, `POST` und `DELETE`. Diese müssen pro Location im Server-Root über die Konfigurationsdatei explizit aktiviert werden. `GET` sendet angeforderte Daten an den Client zurück. `POST` lädt Daten vom Client in den Upload-Speicher des Servers hoch (ebenfalls in der Konfiguration definiert). `DELETE` entfernt angeforderte Daten vollständig vom Server. Diese Methoden sind selbstverständlich durch Sicherheitsmechanismen abgesichert.
 
-The program can be simply launched with ```./webserv``` and it will use the `default.conf` file if available. If you wish to write your own custom config, you can run it with ```./webserv [config file path]```.
-The process will then run indefinately; displaying logs until it is closed by sending an interrupt signal with `CTRL+c`.
+- _Konfigurationsdirektiven:_
+  Es gibt viele Konfigurationsdirektiven, mit denen verschiedene Serverfunktionen gesteuert werden können. Für alle fehlenden Direktiven existieren Standardwerte. Eine detaillierte Tabelle wird im nächsten Abschnitt gezeigt.
 
-## Configuration
+- _CGI-Skriptausführung:_
+  Der Server unterstützt die Ausführung von CGI-Skripten, die über die Direktive `cgi-path` konfiguriert werden können. Diese definiert den Pfad, anhand dessen CGI-Anfragen erkannt werden.
 
-There can be any amount of server scopes and location scopes inside said servers. No directive is absolutely mandatory, as there are defaults for everything that will take effect. For example, I can not define the index and it will always default to `index.html`. If it does not exist, a 404 response will be sent.
-Each scope is opened and closed with `{ }` and each directive is terminated with `;`.
+- _Beispielseiten und Konfiguration:_
+  Das Projekt enthält eine Standardkonfiguration sowie eine Beispiel-Website mit mehreren HTML-Seiten und CSS-Styling. Es gibt eine Upload-Seite zum Testen von POST-Anfragen sowie eine CGI-Testseite, die Eingaben an ein Beispielprogramm weiterleitet, welches die Daten verarbeitet und als HTML zurückgibt.
 
-Here is every available directive and scope in our configuration system:
+- _Ausführliches Logging:_
+  Zusätzlich wurde ein robustes Logging- und Debugging-System implementiert, das zur Laufzeit hilfreiche Informationen ausgibt, etwa Request-Daten und Fehler.
+
+## Nutzung
+
+Das Programm kann einfach mit `./webserv` gestartet werden. Dabei wird automatisch die Datei `default.conf` verwendet, sofern vorhanden. Für eine eigene Konfiguration kann es mit `./webserv [Pfad zur Konfigurationsdatei]` gestartet werden.
+
+Der Prozess läuft anschließend unbegrenzt und gibt Logs aus, bis er durch ein Interrupt-Signal mit `CTRL+C` beendet wird.
+
+## Konfiguration
+
+Es können beliebig viele Server-Scopes und Location-Scopes innerhalb eines Servers definiert werden. Keine Direktive ist zwingend erforderlich, da für alle Werte Standardwerte existieren. Wird z. B. kein Index definiert, wird automatisch `index.html` verwendet. Falls diese Datei nicht existiert, wird eine 404-Antwort zurückgegeben.
+
+Jeder Scope wird mit `{ }` geöffnet und geschlossen, jede Direktive endet mit `;`.
+
+Hier sind alle verfügbaren Direktiven und Scopes im Konfigurationssystem:
+
 <table border="1" cellpadding="6" cellspacing="0">
   <thead>
     <tr>
-      <th>Keyword</th>
-      <th>Type</th>
-      <th>Fields</th>
-      <th>Description</th>
+      <th>Schlüsselwort</th>
+      <th>Typ</th>
+      <th>Felder</th>
+      <th>Beschreibung</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>server</td>
-      <td>scope</td>
-      <td>server name</td>
-      <td>Defines a server to run upon execution.</td>
+      <td>Scope</td>
+      <td>Servername</td>
+      <td>Definiert einen Server, der beim Start ausgeführt wird.</td>
     </tr>
-	<tr>
-	  <td>error_page</td>
-	  <td>directive</td>
-	  <td>status code, path to page</td>
-	  <td>Sets the response page to be used for a specified status code.</td>
-	</tr>
+    <tr>
+      <td>error_page</td>
+      <td>Direktive</td>
+      <td>Statuscode, Seitenpfad</td>
+      <td>Setzt die Antwortseite für einen bestimmten HTTP-Statuscode.</td>
+    </tr>
     <tr>
       <td>location</td>
-      <td>scope</td>
-      <td>path (relative to server root)</td>
-      <td>Defines a location in the server. Must be inside a server scope.</td>
+      <td>Scope</td>
+      <td>Pfad (relativ zum Server-Root)</td>
+      <td>Definiert eine Location innerhalb des Servers. Muss innerhalb eines Server-Scopes liegen.</td>
     </tr>
     <tr>
       <td>listen</td>
-      <td>directive</td>
-      <td>port number</td>
-      <td>Sets the port that this server will listen to.</td>
+      <td>Direktive</td>
+      <td>Portnummer</td>
+      <td>Legt den Port fest, auf dem der Server lauscht.</td>
     </tr>
     <tr>
       <td>host</td>
-      <td>directive</td>
-      <td>ip address</td>
-      <td>Sets the IP the server will be hosted on.</td>
+      <td>Direktive</td>
+      <td>IP-Adresse</td>
+      <td>Legt die IP-Adresse fest, auf der der Server läuft.</td>
     </tr>
     <tr>
       <td>root</td>
-      <td>directive</td>
-      <td>path</td>
-      <td>Sets the root directory of the server.</td>
+      <td>Direktive</td>
+      <td>Pfad</td>
+      <td>Definiert das Root-Verzeichnis des Servers.</td>
     </tr>
     <tr>
       <td>index</td>
-      <td>directive</td>
-      <td>path/filename</td>
-      <td>Sets the default response file for a simple request to the server.</td>
+      <td>Direktive</td>
+      <td>Dateipfad/Dateiname</td>
+      <td>Definiert die Standarddatei für einfache Serveranfragen.</td>
     </tr>
     <tr>
       <td>timeout</td>
-      <td>directive</td>
-      <td>time (seconds)</td>
-      <td>Sets the maximum time the socket connection will stay open awaiting a request before timing out.</td>
+      <td>Direktive</td>
+      <td>Zeit (Sekunden)</td>
+      <td>Maximale Zeit, die eine Socket-Verbindung ohne Aktivität offen bleibt.</td>
     </tr>
     <tr>
       <td>cgi</td>
-	  <td>directive</td>
-	  <td>file extensions</td>
-	  <td>Defines the file types which will be treated as CGI scripts by the server.</td>
+      <td>Direktive</td>
+      <td>Dateiendungen</td>
+      <td>Definiert Dateitypen, die als CGI-Skripte behandelt werden.</td>
     </tr>
     <tr>
       <td>max_body</td>
-      <td>directive</td>
-      <td>size (bytes)</td>
-      <td>Sets the maximum body size that can be handled from a <code>POST</code> request for a specific location.</td>
+      <td>Direktive</td>
+      <td>Größe (Bytes)</td>
+      <td>Setzt die maximale Body-Größe für <code>POST</code>-Anfragen pro Location.</td>
     </tr>
     <tr>
       <td>methods</td>
-      <td>directive</td>
-      <td>method names (space separated)</td>
-      <td>Sets the allowed methods for a specific location.</td>
+      <td>Direktive</td>
+      <td>Methodennamen (durch Leerzeichen getrennt)</td>
+      <td>Definiert erlaubte HTTP-Methoden für eine Location.</td>
     </tr>
-	<tr>
-	  <td>return</td>
-	  <td>directive</td>
-	  <td>path aliases</td>
-	  <td>Adds aliases that will redirect to the location the return directive is in.</td>
-	</tr>
+    <tr>
+      <td>return</td>
+      <td>Direktive</td>
+      <td>Pfad-Aliase</td>
+      <td>Definiert Weiterleitungen (Aliases) zu der Location, in der die Direktive gesetzt ist.</td>
+    </tr>
   </tbody>
 </table>
 
-Example config:
+Beispielkonfiguration:
 ```conf
 server {
 	listen 8080;

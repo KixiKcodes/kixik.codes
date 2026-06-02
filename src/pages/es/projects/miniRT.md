@@ -2,71 +2,63 @@
 layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'miniRT'
 pubDate: '09.04.2025'
-description: '3D raytracer made in pure C using MLX42.'
+description: 'Raytracer 3D hecho en C puro usando MLX42.'
 tags: ["C"]
 ---
 
 ![test_scene](/images/test_scene.png)
 
-_This project was made in collaboration with [Cimex](https://github.com/Cimex404). He has uploaded it as his own repository as well!_
+_Este proyecto fue realizado en colaboración con [Cimex](https://github.com/Cimex404). Él también lo ha subido a su propio repositorio._
 
-## About
-MiniRT is a basic 3D ray-tracer that uses the MLX42 graphical library (OpenGL windows) to render a scene based off a scene file containing camera, light and object data.\
-It works by casting a ray for each screen pixel out of the camera and calculating intersections with objects in 3D space. The objects have surface normals that dictate how the ray should behave when bouncing back to the light source. The scene currently can only have one point light and all rays trace back to it. Shadows are calculated in two different ways; shadow rays and ambient occlusion. Shadow rays are generated where the ray hits an object and cannot continue, simulating how the shadow would be cast onto whichever surface it occluded. Ambient occlusion on the other hand is purely proximity-based between two very close objects and simulates how light gets trapped in tight spaces and diffuses into darkness. Both of these shading processes use samples and pseudo-random scatter to simulate diffusion. The higher the samples the less noisy the shadows look in exchange for computation time. Additionally, some extra visual features have been implemented, as well as basic run-time user controls. Memory is handled with a rudimentary garbage collection system and there is a robust logging and error handling system for convenience.\
-Despite being a project for 42, the latest and all future version will deviate from **the norm**. If you wish to see a fully norm-compatible version that we submitted, check the commit history for that point in development!
+## Acerca del proyecto
 
-## Features
-- **Primitive Assets:**\
-	Currently the project features three primitive objects: planes, spheres and cylinders. Each have unique parameters that can be set in the scene file. More info in _Usage_.
-- **Lighting:**\
-	The scene is lit by two sources, an ambient light and a point light. The ambient light acts as a global illumination and also controls the base atmosphere color where no objects are hit (like a skylight in other 3D software). The point light is a single point out of which light is cast. It is currently invisible on its own and only casts light onto objects directly. It also has a fall-off distance and does not cast shadows indefinitely far away.
-- **Roughness:**\
-	To simulate different materials, we implemented a roughness index which can be optionally tweaked for every object. This roughness will determine how much of a specular highlight forms at the point in the object in which the surface normal directly reflects light rays back into the camera.
-- **Reflections:**\
-	Some basic reflections have been implemented and each object has an optional reflectivity index, much like roughness. The maximum reflections are set as a constant in each preset, with the highest quality allowing up to 100 reflections.
-- **User Input:**\
-	Key hooks have been added to allow for some user input. The controls allow you to move, rotate and change thw shadow sample dynamically.
-	Keybinds:
-	- `w` - move forward
-	- `s` - move backward
-	- `a` - move left
-	- `d` - move right
-	- `↑` - rotate up (until looking straight up)
-	- `↓` - rotate down (until looking straight down)
-	- `←` and `→` - rotate left and right respectively (loops back around)
-	- Numpad `+` and `-` - increase/decrease shadow samples by 16 (from a range of 1 to 112)
-- **Quality Presets:**\
-	In order to test scenes easily I have made three different quality presets that change the default samples, maximum reflections and window dimensions. The three presets are:
-	- _Standard_ - 800 x 500, 64 samples, 50 reflections (a nice balance, samples can be lowered manually for slow movement)
-	- _Low_ - 320 x 200, 1 sample, 1 reflection (allows smooth movement around the scene at the cost of poor quality)
-	- _High_ - 1600 x 1000, 80 samples, 100 reflections (for high quality renders, movement is essentially impossible)
-	To change the quality, you can compile with `make QUALITY=LOW` or `QUALITY=HIGH`. If compiled without this flag it will default to standard quality.
-- **Logging System:**\
-	The program logs all objects when parsing them and reports any issues with warnings or errors as they are found. When rendering it also displays the percentage of processed pixels in intervals of 10.
+MiniRT es un ray-tracer 3D básico que utiliza la librería gráfica MLX42 (ventanas OpenGL) para renderizar una escena a partir de un archivo de escena que contiene datos de cámara, luces y objetos.\
+Funciona lanzando un rayo por cada píxel de la pantalla desde la cámara y calculando las intersecciones con objetos en el espacio 3D. Los objetos tienen normales de superficie que determinan cómo el rayo debe comportarse al rebotar hacia la fuente de luz.
 
-## Usage
-You can simply compile with `make`. To clean binaries use `make clean` or `make fclean` for a full wipe of the executable. You can also specify the quality as previously described.
-To run miniRT on a scene you must use this command:
+La escena actualmente solo puede tener una luz puntual y todos los rayos trazan hacia ella. Las sombras se calculan de dos formas: shadow rays y oclusión ambiental. Los shadow rays se generan cuando el rayo impacta un objeto y no puede continuar, simulando cómo la sombra se proyecta sobre la superficie ocluida. La oclusión ambiental, por otro lado, es puramente basada en proximidad entre objetos muy cercanos y simula cómo la luz queda atrapada en espacios estrechos y se difunde en la oscuridad.
+
+Ambos procesos de sombreado utilizan muestreo y dispersión pseudoaleatoria para simular la difusión. Cuantos más samples, menos ruido presentan las sombras, a cambio de mayor tiempo de cómputo.
+
+Además, se han implementado características visuales adicionales, así como controles básicos en tiempo de ejecución. La memoria se gestiona mediante un sistema rudimentario de recolección de basura y existe un sistema robusto de logging y manejo de errores para mayor comodidad.\
+A pesar de ser un proyecto de 42, la última versión y todas las futuras se desviarán de **la norma**. Si deseas ver una versión totalmente compatible con la norma que entregamos, revisa el historial de commits.
+
+## Funcionalidades
+
+- **Assets primitivos:**\
+  Actualmente el proyecto cuenta con tres objetos primitivos: planos, esferas y cilindros. Cada uno tiene parámetros únicos que pueden configurarse en el archivo de escena.
+- **Iluminación:**\
+  La escena está iluminada por dos fuentes: una luz ambiental y una luz puntual. La luz ambiental actúa como iluminación global y define el color base del entorno. La luz puntual emite luz desde un punto específico, con caída de intensidad y sin propagación infinita de sombras.
+- **Rugosidad:**\
+  Se implementa un índice de rugosidad para simular materiales distintos, afectando los reflejos especulares.
+- **Reflejos:**\
+  Cada objeto puede tener un índice de reflectividad. El número máximo de rebotes está limitado por configuración, pudiendo llegar hasta 100 reflexiones.
+- **Entrada del usuario:**\
+  Se han añadido controles de teclado para mover y rotar la cámara y modificar los samples de sombras dinámicamente.
+- **Presets de calidad:**\
+  Tres configuraciones de calidad: Standard, Low y High, que ajustan resolución, samples y reflexiones.
+
+## Uso
+
+Compilar con `make`. Limpiar con `make clean` o `make fclean`.
+
+Ejecutar:
 
 ```bash
-./miniRT "[scene file / path to scene file]"
+./miniRT "[archivo de escena / ruta al archivo de escena]"
 ```
 
-The scene file must have the `.rt` extension and must follow a specific format:
-- The scene _must_ include a single ambient light (`A`), a single camera (`C`) and a single point light (`L`).
-- The **ambient light** parameters are `intensity` from 0 to 1 as a float and `color` in RGB format as three values from 0 to 255. _Color works this way for all assets._
-- The **camera** parameters are `position` x,y,z `rotation` x,y,z as values from -1 to 1 and `focal length` or FOV as a value from 1 to 180.
-- The **point light** parameters are `position` x,y,z as well as intensity and color in the same format as the ambient light.
-- The scene can have any amount of objects out of a selection of **planes** (`pl`), **spheres** (`sp`) and **cylinders** (`cy`).
-- Planes extend infinitely and have a single normal that points in the direction of their rotation vector. They have `position` x,y,z `rotation` x,y,z and `color`.
-- Spheres have `position` like all other objects, no rotation as it has no effect on the a sphere, `diameter` as a float and `color`, as per usual.
-- Cylinders have `position` and `rotation` in the usual format as well as `diameter`, `height` and `color`.
-- If any of these objects parameters is missing, in the wrong order or otherwise invalid the object will be ignored and not rendered. If the mandatory assets (ambient, camera and point light) are missing or invalid the window will not launch at all.
-- For all objects, in addition to their necessary parameters you can also add `roughness` and `reflectivity` as floats from 0 to 1 in that order. If not added, these parameters will default to some preset values.
-- The parameters can be space-separated as much as you like and have any empty lines between assets. Any unrecognized assets will be ignored.
-- You can also add commented lines to the scene file. To do this, simply add a `#` to the **start** of the line.
+El archivo debe tener extensión `.rt` y seguir un formato específico:
 
-An example scene would look like this:
+* Debe incluir una luz ambiental (`A`), una cámara (`C`) y una luz puntual (`L`).
+* La luz ambiental tiene intensidad (0 a 1) y color RGB.
+* La cámara tiene posición, rotación y FOV.
+* La luz puntual tiene posición, intensidad y color.
+* Objetos: planos (`pl`), esferas (`sp`) y cilindros (`cy`).
+* Se pueden añadir `roughness` y `reflectivity` opcionales (0 a 1).
+* Líneas comentadas con `#`.
+
+Ejemplo:
+
 ```sh
 #AST  POSITION        ROTATION    LUM/FOV RAD HGT  COLOR       ROUGH REFLECT
 A                                 0.1              240,255,255
@@ -83,24 +75,24 @@ cy   50.0,7,-8        -1,0,1              20 15.5  0,255,255
 sp   -5,0,-21                             16       255,255,255 0
 ```
 
-**NOTE:** The project depends on my [libft](https://github.com/KixiKcodes/libft) utilities library as well as [MLX42](https://github.com/codam-coding-college/MLX42) for graphics. Both are added as submodules in the repository.
+## Galería de renders
 
-## Render Gallery
-![alien_planet](/images/alien_planet.png)
-![mirror_room](/images/mirror_room.png)
-![underwater_temple](/images/underwater_temple.png)
-![water_molecule](/images/water_molecule.png)
-![eval_scene_7](/images/eval_scene_7.png)
+![alien\_planet](/images/alien_planet.png)
+![mirror\_room](/images/mirror_room.png)
+![underwater\_temple](/images/underwater_temple.png)
+![water\_molecule](/images/water_molecule.png)
+![eval\_scene\_7](/images/eval_scene_7.png)
 ![octagon](/images/octagon.png)
 
-## Future Plans
-This project has undoubtedly been my favorite from the 42 core curriculum so far. I look forward to adding many advanced features, _though no longer strictly following the 42 norm or project rules_.
-Here is a list of the features I would like to add:
-- Performance improvements such as multi-threading and GPU delegation. Potentially bounding volume hierarchy.
-- Bloom to the point light, such that we can see where it is exactly.
-- Better handling of large scenes where the shadows are cast long distances.
-- A cuboid primitive object.
-- Support for the **obj** 3D format, allowing for rendering of any 3D model.
-- _Maybe_ light refraction and caustics.
-- Bump-mapping and textures.
-- _If I'm feeling crazy_, a way to edit the assets dynamically during runtime.
+## Planes futuros
+
+Este proyecto ha sido uno de mis favoritos del core de 42. Planeo añadir:
+
+* mejoras de rendimiento (multithreading, GPU, BVH)
+* bloom en la luz puntual
+* mejor manejo de escenas grandes
+* objeto cúbico
+* soporte para formato OBJ
+* refracción y caústicas
+* bump mapping y texturas
+* edición en tiempo real de assets
