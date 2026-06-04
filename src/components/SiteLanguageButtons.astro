@@ -1,34 +1,79 @@
 ---
 const supported = ["en", "de", "es"];
+
 const pathname = Astro.url?.pathname ?? "/";
 const segments = pathname.split("/").filter(Boolean);
+
 const hasLangPrefix = supported.includes(segments[0] ?? "");
 const currentLang = hasLangPrefix ? segments[0] : "en";
-const restSegments = hasLangPrefix ? segments.slice(1) : segments;
-const restPath = restSegments.length ? `/${restSegments.join("/")}` : "";
-const makeHref = (lang) => `/${lang}${restPath}`;
+
+const restPath = hasLangPrefix
+    ? segments.slice(1).join("/")
+    : segments.join("/");
+
+// detect dynamic (md-driven) routes
+const isMdRoute = segments.includes("projects") || segments.includes("posts")
+    ? segments.length > (hasLangPrefix ? 2 : 1)
+    : false;
+
+// ONLY load md pages for checking
+const pages = Object.keys(import.meta.glob("/src/pages/**/*.md"));
+
+function toRoute(filePath) {
+    return filePath
+        .replace("/src/pages", "")
+        .replace(/\.md$/, "")
+        .replace(/\/index$/, "");
+}
+
+const routeSet = new Set(pages.map(toRoute));
+
+function buildLangPath(lang) {
+    return `/${lang}${restPath ? `/${restPath}` : ""}`;
+}
+
+function translationExists(lang) {
+    if (!isMdRoute) return true; // ⬅️ KEY FIX
+
+    const target = buildLangPath(lang);
+    return routeSet.has(target);
+}
+
+function makeHref(lang) {
+    return buildLangPath(lang);
+}
 ---
 
 <nav class="site-language" aria-label="Language selector">
     <a
-        class={`lang-button ${currentLang === "en" ? "is-active" : ""}`}
-        href={makeHref("en")}
+        class={`lang-button ${currentLang === "en" ? "is-active" : ""} ${
+            !translationExists("en") ? "is-disabled" : ""
+        }`}
+        href={translationExists("en") ? makeHref("en") : undefined}
         aria-current={currentLang === "en" ? "page" : undefined}
     >
         EN
     </a>
+
     <span class="lang-sep" aria-hidden="true">|</span>
+
     <a
-        class={`lang-button ${currentLang === "de" ? "is-active" : ""}`}
-        href={makeHref("de")}
+        class={`lang-button ${currentLang === "de" ? "is-active" : ""} ${
+            !translationExists("de") ? "is-disabled" : ""
+        }`}
+        href={translationExists("de") ? makeHref("de") : undefined}
         aria-current={currentLang === "de" ? "page" : undefined}
     >
         DE
     </a>
+
     <span class="lang-sep" aria-hidden="true">|</span>
+
     <a
-        class={`lang-button ${currentLang === "es" ? "is-active" : ""}`}
-        href={makeHref("es")}
+        class={`lang-button ${currentLang === "es" ? "is-active" : ""} ${
+            !translationExists("es") ? "is-disabled" : ""
+        }`}
+        href={translationExists("es") ? makeHref("es") : undefined}
         aria-current={currentLang === "es" ? "page" : undefined}
     >
         ES
@@ -63,6 +108,16 @@ const makeHref = (lang) => `/${lang}${restPath}`;
 
     .lang-button:hover {
         color: white;
+    }
+
+    .lang-button.is-disabled {
+        color: rgba(255, 255, 255, 0.35);
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .lang-button.is-disabled:hover {
+        color: rgba(255, 255, 255, 0.35);
     }
 
     .lang-sep {
