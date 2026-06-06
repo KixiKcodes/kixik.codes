@@ -21,7 +21,7 @@ So now, over a year later, I got nostalgic and decided to fully rewrite minishel
 - **Variable Expansion and Quote Resolution:**
 	Using `$` before a string will automatically replace it with its corresponding value if it is an existing environment variable. This works with double quotes as well, merging multiple strings as a single token and performing expansion, and works with single quotes doing the same but ignoring the expansion. The last exit status can also be accessed with `$?`.
     
-![basic_test](images/basic_test.png)
+![basic_test](/images/basic_test.png)
 - **Signal Handling:**
 	Multiple signals are handled and update the status accordingly. 
 	- `Crtl+D` types a null prompt which exits the shell. It can also be used to exit a heredoc early or close a pending cat, grep, wc or any other command dependent on input.
@@ -33,24 +33,24 @@ So now, over a year later, I got nostalgic and decided to fully rewrite minishel
 	- `>>` - Behaves identically to the write redirection but appends content instead of truncating.
 	- `<<` - Creates a temporary file and allows the user to write to it. The string immediately after the heredoc symbol will be used as a delimiter to make the End-Of-File. Expansion will still take place inside the heredoc file but the delimiter string itself will be treated as the raw input string without any expansion or quote processing.
 
-![redirs_test](images/redirs_test.png)
+![redirs_test](/images/redirs_test.png)
 - **Execution and Pipelines:**
 	The shell will run all installed and native Unix/Bash commands as well as accept direct paths to executables. It can handle any number of pipes (`|`) from one command to another, executing each one in its own child process. All of this can be combined with redirections and all parsing features mentioned prior, just like Bash.
 
-![pipes_test](images/pipes_test.png)
+![pipes_test](/images/pipes_test.png)
 - **Logic Operators and Sequences:**
 	Additionally, you can use the `&&` and `||` operators between commands and they will be handled the same way Bash does. You can also execute separate commands in sequence by using `;` to separate them.
 	- `&&` - Executes the command following it only if the previous command succeeded.
 	- `||` - Executes the command following it only if the previous command failed.
 	- `;` - Acts as a delimiter between groups of commands so that they can be executed in sequence completely independent of each other.
 
-![logic_test](images/logic_test.png)
+![logic_test](/images/logic_test.png)
 - **Working History:**
 	The up and down arrow keys can be used to cycle through past commands. All commands not interrupted by a signal are added to the history. TAB completion should also work normally like in any other shell.
 - **Error Handling:**
 	There are specific error codes for different types of errors that can occur during runtime, some fatal and some not. Errors within child processes spawned from the shell will also be reported and their exit status stored during the current loop. Signals affect the status the same way as in Bash.
 
-![errors_test](images/errors_test.png)
+![errors_test](/images/errors_test.png)
 
 ## Methodology
 These are break-downs of how I handle each step of the shell's runtime loop. When you start the shell the environment will be duplicated and a loop will take in your input, handle any immediate edge-cases like signals or special keys and then process your input in the following order.
