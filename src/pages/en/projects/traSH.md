@@ -3,6 +3,7 @@ layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'traSH'
 pubDate: '04.06.2026'
 description: 'Fully functional shell inspired by Bash writen in C.'
+source: 'https://github.com/KixiKcodes/traSH'
 tags: ["C"]
 ---
 ## About

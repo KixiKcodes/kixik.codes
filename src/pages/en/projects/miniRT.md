@@ -3,6 +3,7 @@ layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'miniRT'
 pubDate: '09.04.2025'
 description: '3D raytracer made in pure C using MLX42.'
+source: 'https://github.com/KixiKcodes/miniRT'
 tags: ["C"]
 ---
 

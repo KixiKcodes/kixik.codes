@@ -3,6 +3,7 @@ layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'ft_transcendence'
 pubDate: '06.11.2025'
 description: 'Final project of the 42 Core Curriculum. Full-stack prototype of a web application centered around classic Pong.'
+source: 'https://github.com/KixiKcodes/ft_transcendence'
 tags: ["TypeScript", "JavaScript", "HTML", "CSS", "Docker"]
 ---
 

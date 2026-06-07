@@ -3,6 +3,7 @@ layout: ../../../layouts/MarkdownPostLayout.astro
 title: 'Grimoire'
 pubDate: '02.05.2026'
 description: 'A Blood on the Clocktower game management app for Android.'
+source: 'https://github.com/KixiKcodes/Grimoire'
 tags: ["Kotlin", "Android"]
 ---
 
